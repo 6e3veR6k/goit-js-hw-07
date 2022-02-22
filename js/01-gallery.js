@@ -1,21 +1,25 @@
 import { galleryItems } from './gallery-items.js';
-// Change code below this line
 
-console.log(galleryItems[0]);
+// Change code below this line
 
 const galleryRef = document.querySelector('.gallery');
 
 const createGalleryItem = ({ preview, original, description }) => {
-  const emptyDiv = document.createElement('div');
+  const resultDiv = document.createElement('div');
+  resultDiv.classList.add('gallery__item');
 
-  const galleryItem = `<div class="gallery__item">
-  <a class="gallery__link" href="large-image.jpg">
-    <img
-      class="gallery__image"
-      src="small-image.jpg"
-      data-source="large-image.jpg"
-      alt="Image description"
-    />
-  </a>
-</div>`;
+  const galleryItem = `<a class="gallery__link" href="${original}">
+      <img class="gallery__image"
+          src="${preview}"
+          data-source="${original}"
+          alt="${description}"/>
+    </a>`;
+
+  resultDiv.insertAdjacentHTML('afterbegin', galleryItem);
+  return resultDiv;
 };
+
+galleryRef.append(...galleryItems.map((i) => createGalleryItem(i)));
+
+const instance = basicLightbox.create(galleryRef);
+instance.show(() => console.log('lightbox now visible'));
